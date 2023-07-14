@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://c85oj55r3aioy"]
+
+[ext_resource type="Texture2D" uid="uid://dc3x2kax1m2ex" path="res://sprites/ponto.png" id="1_yex8u"]
+[ext_resource type="Script" path="res://scripts/Point.gd" id="2_6ydpf"]
+
+[node name="Point" type="Sprite2D"]
+texture = ExtResource("1_yex8u")
+script = ExtResource("2_6ydpf")

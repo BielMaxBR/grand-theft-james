@@ -1,0 +1,107 @@
+[gd_scene load_steps=7 format=3 uid="uid://bjlnbshago1w"]
+
+[ext_resource type="Script" path="res://scripts/entrega.gd" id="1_5o001"]
+[ext_resource type="Texture2D" uid="uid://cbuyjkvvxgtno" path="res://sprites/pessoas/pessoa5.jpg" id="2_rcn50"]
+[ext_resource type="Texture2D" uid="uid://dc3x2kax1m2ex" path="res://sprites/ponto.png" id="3_144v5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m5dw8"]
+radius = 96.0
+
+[sub_resource type="Animation" id="Animation_urjcs"]
+resource_name = "pegado"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Area2D/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../vision:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.9, 1),
+"transitions": PackedFloat32Array(0.287175, 2.73208, 0.659755, 1),
+"update": 0,
+"values": [Vector2(0.4, 0.1), Vector2(0.1, 0.4), Vector2(0.4, 0.1), Vector2(0.2, 0.2)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = false
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.9, 1),
+"transitions": PackedFloat32Array(0.574349, 1.7411, 1, 1),
+"update": 0,
+"values": [Vector2(0, 10), Vector2(0, -50), Vector2(0, 10), Vector2(0, 0)]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = false
+tracks/4/path = NodePath("..")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_olxwt"]
+_data = {
+"pegado": SubResource("Animation_urjcs")
+}
+
+[node name="entrega" type="Node2D"]
+script = ExtResource("1_5o001")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_m5dw8")
+
+[node name="Pessoa" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_rcn50")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Pessoa")
+libraries = {
+"": SubResource("AnimationLibrary_olxwt")
+}
+
+[node name="vision" type="Sprite2D" parent="."]
+modulate = Color(0, 1, 0.0784314, 0.27451)
+texture = ExtResource("3_144v5")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

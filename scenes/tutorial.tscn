@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3 uid="uid://n38hvgrrap3f"]
+
+[ext_resource type="Script" path="res://scripts/tutorial.gd" id="1_3payd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tsk0o"]
+font_size = 32
+
+[node name="tutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3payd")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -467.0
+offset_top = -50.0
+offset_right = 467.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Use WASD para se movimentar com o james"
+label_settings = SubResource("LabelSettings_tsk0o")
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Abra o mapa com M e se guie pelo minimapa"
+label_settings = SubResource("LabelSettings_tsk0o")
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "entregue o máximo de saladas de frutas até o tempo acabar"
+label_settings = SubResource("LabelSettings_tsk0o")
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "AGORA SIM COMEÇA ESSA BAGAÇA"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

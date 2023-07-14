@@ -1,0 +1,91 @@
+[gd_scene load_steps=14 format=3 uid="uid://c28pots16pjmf"]
+
+[ext_resource type="Script" path="res://scripts/James.gd" id="1_c1yvy"]
+[ext_resource type="Texture2D" uid="uid://45tk6ub4qmkl" path="res://sprites/james.png" id="2_6u6m1"]
+[ext_resource type="Texture2D" uid="uid://cw4xu7ja11r5u" path="res://sprites/roda.png" id="2_s35i6"]
+[ext_resource type="PackedScene" uid="uid://cy1bvkym83slj" path="res://scenes/borracha_queimando.tscn" id="3_avisb"]
+[ext_resource type="Script" path="res://scripts/classes/stateMachine.gd" id="3_d4fg0"]
+[ext_resource type="Script" path="res://scripts/states/Accelerating.gd" id="5_ge2m4"]
+[ext_resource type="Script" path="res://scripts/states/Idle.gd" id="5_orrtw"]
+[ext_resource type="Texture2D" uid="uid://0aelh2einpmq" path="res://icon.svg" id="7_dq583"]
+[ext_resource type="Script" path="res://scripts/states/Slowing.gd" id="8_coja6"]
+[ext_resource type="Script" path="res://scripts/states/Breaking.gd" id="10_lgdya"]
+[ext_resource type="Script" path="res://scripts/states/Backing.gd" id="11_syhsw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3kl3s"]
+radius = 13.0
+height = 64.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bkbn3"]
+radius = 13.0
+height = 36.0
+
+[node name="James" type="CharacterBody2D" groups=["james"]]
+motion_mode = 1
+platform_on_leave = 2
+script = ExtResource("1_c1yvy")
+
+[node name="Roda" type="Sprite2D" parent="."]
+position = Vector2(0, -21)
+texture = ExtResource("2_s35i6")
+
+[node name="borracha_queimando" parent="Roda" instance=ExtResource("3_avisb")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 3.14159
+texture = ExtResource("2_6u6m1")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+ignore_rotation = false
+zoom = Vector2(1.2, 1.2)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 20.0
+rotation_smoothing_enabled = true
+rotation_smoothing_speed = 4.0
+drag_vertical_offset = -0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_3kl3s")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_bkbn3")
+disabled = true
+
+[node name="StateName" type="Label" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+text = "aaaaaa"
+
+[node name="PivotPoint" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("7_dq583")
+
+[node name="Traseira" type="Marker2D" parent="."]
+position = Vector2(0, 25)
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("3_d4fg0")
+initial_state = NodePath("Idle")
+
+[node name="Accelerating" type="Node" parent="StateMachine"]
+script = ExtResource("5_ge2m4")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("5_orrtw")
+
+[node name="Slowing" type="Node" parent="StateMachine"]
+script = ExtResource("8_coja6")
+
+[node name="Breaking" type="Node" parent="StateMachine"]
+script = ExtResource("10_lgdya")
+
+[node name="Backing" type="Node" parent="StateMachine"]
+script = ExtResource("11_syhsw")
+
+[node name="borracha_queimando" parent="." instance=ExtResource("3_avisb")]
+position = Vector2(0, 25)
+
+[connection signal="transitioned" from="StateMachine" to="." method="_on_state_machine_transitioned"]

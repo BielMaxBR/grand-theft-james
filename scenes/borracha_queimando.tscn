@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cy1bvkym83slj"]
+
+[ext_resource type="Texture2D" uid="uid://doe5s4q6ff124" path="res://sprites/raspada.png" id="1_0pyvl"]
+[ext_resource type="Script" path="res://scripts/borracha_queimando.gd" id="1_0wofg"]
+
+[sub_resource type="Gradient" id="Gradient_kxu4n"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[node name="borracha_queimando" type="Line2D"]
+show_behind_parent = true
+gradient = SubResource("Gradient_kxu4n")
+texture = ExtResource("1_0pyvl")
+texture_mode = 2
+script = ExtResource("1_0wofg")
+lenght = 15
